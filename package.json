@@ -1,0 +1,24 @@
+{
+  "name": "mws-restaurant-reviews-app",
+  "version": "1.0.0",
+  "description": "Restaurant Reviews App to turn offline first and completely responsive to pass NanoDegree program.",
+  "main": "index.html",
+  "scripts": {
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adnanusman/mws-restaurant-stage-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adnanusman/mws-restaurant-stage-1/issues"
+  },
+  "homepage": "https://github.com/adnanusman/mws-restaurant-stage-1#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.5.0",
+    "gulp-cssnano": "^2.1.3"
+  }
+}
