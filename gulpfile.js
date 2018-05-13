@@ -36,6 +36,13 @@ gulp.task('copy-html', function() {
     .pipe(connect.reload());
 })
 
+// copy SW to build folder
+gulp.task('copy-sw', function() {
+  gulp.src('src/sw.js')
+    .pipe(gulp.dest('build'))
+    .pipe(connect.reload());
+})
+
 // Serve Application on localhost
 gulp.task('serve', function() {
   connect.server({
@@ -50,6 +57,7 @@ gulp.task('watch', function() {
   gulp.watch('src/css/*.css', ['min-css']);
   gulp.watch('src/js/*.js', ['copy-js']);
   gulp.watch('src/*.html', ['copy-html']);
+  gulp.watch('src/sw.js', ['copy-sw']);
 })
 
-gulp.task('default', ['copy-images', 'copy-json', 'min-css', 'copy-js', 'copy-html', 'serve', 'watch']);
+gulp.task('default', ['copy-images', 'copy-json', 'min-css', 'copy-js', 'copy-html', 'copy-sw', 'serve', 'watch']);
