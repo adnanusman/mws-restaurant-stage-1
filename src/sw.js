@@ -1,5 +1,5 @@
 // Give the cache a name and version
-const cacheName = 'rr-v2'
+const cacheName = 'rr-v3'
 
 // Installing Service Worker and adding files to browser cache
 self.addEventListener('install', (event) => { 
@@ -11,6 +11,7 @@ self.addEventListener('install', (event) => {
         'js/main.js',
         'js/restaurant_info.js',
         'data/restaurants.json',
+        'data/manifest.json',
         'css/styles.css',
         'img/1.jpg',
         'img/2.jpg',
