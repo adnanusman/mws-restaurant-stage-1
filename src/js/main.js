@@ -190,3 +190,17 @@ if('serviceWorker' in navigator) {
     console.log('Registration failed', error);
   });
 }
+
+/**
+ * Add a 'Skip to content' button right after body tag
+ */
+(createSkipToContentButton = () => {
+  let button = document.createElement('a');
+  button.classList += 'skip-content';
+  button.innerHTML = 'Skip to Content';
+  button.href = "#restaurants-list";
+  button.setAttribute('role', 'button');
+
+  let body = document.querySelector('body');
+  document.body.insertBefore(button, document.body.firstChild);
+}) ();

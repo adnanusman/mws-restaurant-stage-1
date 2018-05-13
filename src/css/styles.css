@@ -291,6 +291,22 @@ label {
   color: #666;
 }
 
+/* ====================== Skip to Content Button ====================== */
+
+.skip-content {
+  position: absolute;
+  transform: translateX(-1000px);
+  transition: 0.3s ease-in-out;
+  background: #b93f10;
+  padding: 5px 10px;
+  border-radius: 2px;
+}
+
+.skip-content:focus {
+  transform: translateX(0);
+  color: #fff;
+}
+
 /* ====================== Media Queries ====================== */
 
 @media screen and (min-width: 850px) {
