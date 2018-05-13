@@ -38,13 +38,13 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   width: 100%;
 }
 #maincontent {
-  background-color: #f3f3f3;
+  background-color: #eee;
   min-height: 100%;
   width: 100%;
 }
 #footer {
   background-color: #444;
-  color: #aaa;
+  color: #fff;
   font-size: 8pt;
   letter-spacing: 1px;
   padding: 25px;
@@ -72,7 +72,7 @@ nav h1 a {
 #breadcrumb {
   padding: 10px 40px 16px;
   list-style: none;
-  background-color: #eee;
+  background-color: #fff;
   font-size: 17px;
   margin: 0;
   width: calc(50% - 80px);
@@ -108,18 +108,21 @@ nav h1 a {
   background-color: #ccc;
 }
 /* ====================== Restaurant Filtering ====================== */
+label {
+  color: #fff;
+}
 .filter-options {
-  max-width: 100%;
+  width: 100%;
   min-height: 5vh;
-  background-color: #3397DB;
+  background-color: #1c4f71;
   align-items: center;
   padding-top: 0.5em;
   text-align: center;
 }
 .filter-options h2 {
   color: white;
-  font-size: 1rem;
-  font-weight: normal;
+  font-size: 1.2rem;
+  font-weight: bold;
   line-height: 1;
   margin: 0 20px;
 }
@@ -161,7 +164,7 @@ nav h1 a {
   min-width: 100%;
 }
 #restaurants-list li h1 {
-  color: #f18200;
+  color: #b93f10;
   font-family: Arial,sans-serif;
   font-size: 14pt;
   font-weight: 200;
@@ -175,7 +178,7 @@ nav h1 a {
   font-size: 11pt;
 }
 #restaurants-list li a {
-  background-color: orange;
+  background-color: #b93f10;
   border-bottom: 3px solid #eee;
   color: #fff;
   display: inline-block;
@@ -214,7 +217,7 @@ nav h1 a {
   width: calc(50% - 80px);
 }
 #restaurant-name {
-  color: #f18200;
+  color: #b93f10;
   font-family: Arial,sans-serif;
   font-size: 20pt;
   font-weight: 200;
@@ -253,7 +256,7 @@ nav h1 a {
   padding: 30px 40px 80px;
 }
 #reviews-container h2 {
-  color: #f58500;
+  color: #b93f10;
   font-size: 24pt;
   font-weight: 300;
   letter-spacing: -1px;
@@ -301,6 +304,14 @@ nav h1 a {
   .filter-options select {
     margin: 10px 0 10px 0;
     padding: 0;
+    display: inline-block;
+    min-width: 150px;
+  }
+  label {
+    display: block;
+    max-width: 200px;
+    margin: auto;
+    padding-top: 10px;
   }
 }
 
