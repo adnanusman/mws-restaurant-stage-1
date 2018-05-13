@@ -23,7 +23,8 @@ a {
 	text-decoration: none;
 }
 a:hover, a:focus {
-	color: #3397db;
+  color: #3397db;
+  text-shadow: 1px 2px #000;
 	text-decoration: none;
 }
 a img{
@@ -97,10 +98,13 @@ nav h1 a {
 }
 
 /* Add a color on mouse-over */
-#breadcrumb li a:hover {
+#breadcrumb li a:hover, #breadcrumb li a:focus {
   color: #01447e;
   text-decoration: underline;
+  text-shadow: none;
+  border: 1px #01447e solid;
 }
+
 /* ====================== Map ====================== */
 #map {
   height: 400px;
@@ -179,7 +183,6 @@ label {
 }
 #restaurants-list li a {
   background-color: #b93f10;
-  border-bottom: 3px solid #eee;
   color: #fff;
   display: inline-block;
   font-size: 10pt;
@@ -189,6 +192,10 @@ label {
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+#restaurants-list li a:focus, #restaurants-list li a:hover {
+  box-shadow: 0px 2px 8px #222;
 }
 
 /* ====================== Restaurant Details ====================== */
