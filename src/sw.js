@@ -1,5 +1,5 @@
 // Give the cache a name and version
-const cacheName = 'rr-v4'
+const cacheName = 'rr-v6'
 
 // Installing Service Worker and adding files to browser cache
 self.addEventListener('install', (event) => { 
@@ -7,6 +7,7 @@ self.addEventListener('install', (event) => {
     caches.open(cacheName).then( (cache) => {
       return cache.addAll([
         '/',
+        'restaurant.html',
         'js/dbhelper.js',
         'js/main.js',
         'js/restaurant_info.js',
@@ -30,21 +31,9 @@ self.addEventListener('install', (event) => {
 
 // Fetching data from cache when it exists otherwise fetching it from the network
 self.addEventListener('fetch', (event) => {
-  const requestUrl = new URL(event.request.url);
-
-  // If the request is for something on the local domain
-  if(requestUrl.origin === location.origin) {
     event.respondWith(
-      caches.match(event.request).then( (response) => {
-        return response || networkFetch(event.request);
-      })
+      networkFetch(event.request)
     );
-  } else {
-    // otherwise fetch requests from other origins directly
-    event.respondWith(
-      fetch(event.request)
-    );
-  };
 });
 
 // If a new service worker is activated, delete the old cache(s)
@@ -61,11 +50,15 @@ self.addEventListener('activate', (event) => {
 });
 
 // Checks for any updates, adds to cache and then responds with network request
-function networkFetch(request) {
-  caches.open(cacheName).then( (cache) => {
-    return fetch(request).then( (response) => {
-      cache.put(request, response.clone());
-      return response;
+// Got this from: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers 
+// (Converted it to ES6)
+networkFetch = (request) => {
+  return caches.match(request).then( (response) => {
+    return response || fetch(request).then( (response) => {
+      return caches.open(cacheName).then( (cache) => {
+        cache.put(request, response.clone());
+        return response;
+      })
     })
   });
 };
