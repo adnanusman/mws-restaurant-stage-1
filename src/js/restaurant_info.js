@@ -55,6 +55,11 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
+  // Adding webp image to source element 
+  const source = document.querySelector('source');
+  source.setAttribute('srcset', DBHelper.webpUrlForRestaurant(restaurant));
+  source.setAttribute('type', 'image/webp');
+  
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);

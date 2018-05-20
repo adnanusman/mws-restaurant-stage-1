@@ -8,12 +8,26 @@ const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const gutil = require('gulp-util');
+const imagemin = require('gulp-imagemin');
+const pngquant = require('imagemin-pngquant');
+const webp = require('gulp-webp');
 
 // copy image files to the build folder
 gulp.task('copy-images', function() {
   return gulp.src('src/img/*') 
+    .pipe(imagemin({
+      progressive: true,
+      use: [pngquant()]
+    }))
     .pipe(gulp.dest('build/img'))  
 });
+
+// convert images to webp
+gulp.task('images-webp', function() {
+  return gulp.src('src/img/*')
+    .pipe(webp())
+    .pipe(gulp.dest('build/img'))
+})
 
 // copy json files to the build folder
 gulp.task('copy-json', function() {
@@ -102,4 +116,4 @@ gulp.task('watch', function() {
   gulp.watch('src/sw.js', ['copy-sw']).on('change', browserSync.reload);
 })
 
-gulp.task('default', ['copy-images', 'copy-json', 'min-css', 'copy-js', 'copy-html', 'copy-sw', 'watch','lint', 'serve']);
+gulp.task('default', ['copy-images', 'images-webp', 'copy-json', 'min-css', 'copy-js', 'copy-html', 'copy-sw', 'watch', 'lint', 'serve']);

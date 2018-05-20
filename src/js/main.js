@@ -138,11 +138,20 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
+  // Add Picture tag, to hold webp images.
+  const picture = document.createElement('picture');
+  const source = document.createElement('source');
+  source.setAttribute('srcset', DBHelper.webpUrlForRestaurant(restaurant));
+  source.setAttribute('type', 'image/webp');
+  picture.append(source);
+
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = restaurant.name;
-  li.append(image);
+  // image inserted into picture element, and picture tag inserted into li element.
+  picture.append(image);
+  li.append(picture);
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;

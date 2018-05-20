@@ -170,6 +170,16 @@ class DBHelper {
   }
 
   /**
+   * Restaurant WebP URL.
+   */
+  static webpUrlForRestaurant(restaurant) {
+    if(!restaurant.photograph) {
+      restaurant.photograph = 10;
+    }
+    return (`/img/${restaurant.photograph}.webp`);
+  }
+
+  /**
    * Restaurant image ALT.
    */
   static imageAltForRestaurant(restaurant) {
