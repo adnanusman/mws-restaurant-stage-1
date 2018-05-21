@@ -136,18 +136,28 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
+  
+  // lazy loading images
+  const observer = new IntersectionObserver( entries => {
+    entries.forEach( entry => {
+      if(entry.isIntersecting === true) {
+        // Add Picture tag, to hold webp images.
+        source.setAttribute('srcset', DBHelper.webpUrlForRestaurant(restaurant));
+        source.setAttribute('type', 'image/webp');
+
+        image.src = DBHelper.imageUrlForRestaurant(restaurant);     
+      };
+    });
+   })
+
   const li = document.createElement('li');
 
-  // Add Picture tag, to hold webp images.
   const picture = document.createElement('picture');
   const source = document.createElement('source');
-  source.setAttribute('srcset', DBHelper.webpUrlForRestaurant(restaurant));
-  source.setAttribute('type', 'image/webp');
   picture.append(source);
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = restaurant.name;
   // image inserted into picture element, and picture tag inserted into li element.
   picture.append(image);
@@ -171,7 +181,8 @@ createRestaurantHTML = (restaurant) => {
   more.setAttribute('role', 'button');
   li.append(more)
 
-  return li
+  observer.observe(li);
+  return li;
 }
 
 /**
