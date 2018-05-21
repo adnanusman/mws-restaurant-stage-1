@@ -32,17 +32,17 @@ class DBHelper {
 
     // using fetch instead of XHR to get data from API/JSON.
     fetch(DBHelper.DATABASE_URL)
-    .then( response => response.json() )
-    .catch( err => console.log(`Error fetching data from API: ${err}`) )
-    .then( response => {
-      const restaurants = response;
-      console.log(restaurants);
-      callback(null, restaurants);
-    })
-    .catch( err => { 
-      const error = err;
-      callback(error, null); 
-    })
+      .then( response => response.json() )
+      .catch( err => console.log(`Error fetching data from API: ${err}`) )
+      .then( response => {
+        const restaurants = response;
+        console.log(restaurants);
+        callback(null, restaurants);
+      })
+      .catch( err => { 
+        const error = err;
+        callback(error, null); 
+      })
   }
   /**
    * Fetch a restaurant by its ID.
