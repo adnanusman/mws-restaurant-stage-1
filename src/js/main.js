@@ -179,6 +179,7 @@ createRestaurantHTML = (restaurant) => {
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
   more.setAttribute('role', 'button');
+  more.setAttribute('tabindex', '3');
   li.append(more)
 
   observer.observe(li);
@@ -220,6 +221,7 @@ if('serviceWorker' in navigator) {
   button.innerHTML = 'Skip to Content';
   button.href = "#restaurants-list";
   button.setAttribute('role', 'button');
+  button.setAttribute('tabindex', '1');
 
   let body = document.querySelector('body');
   document.body.insertBefore(button, document.body.firstChild);

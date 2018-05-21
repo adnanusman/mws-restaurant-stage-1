@@ -1,5 +1,5 @@
 // Give the cache a name and version
-const cacheName = 'rr-v6'
+const cacheName = 'rr-v6';
 
 // Installing Service Worker and adding files to browser cache
 self.addEventListener('install', (event) => { 
@@ -31,9 +31,9 @@ self.addEventListener('install', (event) => {
 
 // Fetching data from cache when it exists otherwise fetching it from the network
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-      networkFetch(event.request)
-    );
+  event.respondWith(
+    networkFetch(event.request)
+  );
 });
 
 // If a new service worker is activated, delete the old cache(s)
