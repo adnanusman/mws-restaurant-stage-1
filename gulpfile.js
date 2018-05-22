@@ -11,6 +11,10 @@ const gutil = require('gulp-util');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const webp = require('gulp-webp');
+const browserify = require('browserify');
+const babelify = require('babelify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 
 // copy image files to the build folder
 gulp.task('copy-images', function() {
@@ -49,9 +53,9 @@ gulp.task('min-css', function() {
 // Copy all JS to the build folder
 gulp.task('copy-js', function() {
   return gulp.src('src/js/*.js')
-    // .pipe(babel())
+    .pipe(babel())
     .pipe(sourcemaps.init())
-    // .pipe(uglify())
+    .pipe(uglify())
     .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/js'))
@@ -67,11 +71,14 @@ gulp.task('copy-html', function() {
 
 // copy SW to build folder
 gulp.task('copy-sw', function() {
-  gulp.src('src/sw.js')
-    // .pipe(babel())
-    .pipe(sourcemaps.init())
-    // .pipe(uglify())
+  browserify('src/sw.js')
+    .transform(babelify)
+    .bundle()
     .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
+    .pipe(source('sw.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('build'))
     // .pipe(connect.reload())

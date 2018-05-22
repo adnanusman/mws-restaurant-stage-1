@@ -1,3 +1,5 @@
+import idb from 'idb';
+
 // Give the cache a name and version
 const cacheName = 'rr-v6';
 
@@ -52,7 +54,7 @@ self.addEventListener('activate', (event) => {
 // Checks for any updates, adds to cache and then responds with network request
 // Got this from: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers 
 // (Converted it to ES6)
-networkFetch = (request) => {
+let networkFetch = (request) => {
   return caches.match(request).then( (response) => {
     return response || fetch(request).then( (response) => {
       return caches.open(cacheName).then( (cache) => {
