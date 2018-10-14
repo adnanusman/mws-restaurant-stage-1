@@ -2,6 +2,18 @@
 ---
 #### _Three Stage Course Material Project - Restaurant Reviews_
 
+## To run the project locally:
+
+You need node and yarn installed.
+
+run 'yarn install' in the main directory
+
+run 'gulp'
+
+The application should automatically open in your browser
+
+If for some reason it does not open, you can view it by browsing to: http://localhost:8000/
+
 ## Project Overview: Stage 1
 
 For the **Restaurant Reviews** projects, you will incrementally convert a static webpage to a mobile-ready web application. In **Stage One**, you will take a static design that lacks accessibility and convert the design to be responsive on different sized displays and accessible for screen reader use. You will also add a service worker to begin the process of creating a seamless offline experience for your users.
