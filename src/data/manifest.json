@@ -1,9 +1,19 @@
 {
-    "name": "Restaurant Reviews App",
-    "short_name": "RR",
-    "theme_color": "#2196f3",
-    "background_color": "#2196f3",
-    "display": "browser",
-    "scope": "/",
-    "start_url": "/index.html"
+  "name": "Restaurant Reviews App",
+  "short_name": "RR",
+  "theme_color": "#2196f3",
+  "background_color": "#2196f3",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/index.html",
+  "icons": [{
+    "src": "/img/icon.png",
+    "sizes": "144x144",
+    "type": "image/png"
+  },
+  {
+    "src": "/img/icon.svg",
+    "sizes": "512x512",
+    "type": "image/svg"
+  }]
 }

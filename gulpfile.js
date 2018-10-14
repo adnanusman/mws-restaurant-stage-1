@@ -15,6 +15,7 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
+const merge = require('merge-stream');
 
 // copy image files to the build folder
 gulp.task('copy-images', function() {
@@ -23,7 +24,7 @@ gulp.task('copy-images', function() {
       progressive: true,
       use: [pngquant()]
     }))
-    .pipe(gulp.dest('build/img'))  
+    .pipe(gulp.dest('build/img'))
 });
 
 // convert images to webp
@@ -50,16 +51,24 @@ gulp.task('min-css', function() {
     // .pipe(connect.reload())
 });
 
-// Copy all JS to the build folder
-gulp.task('copy-js', function() {
-  return gulp.src('src/js/*.js')
-    .pipe(babel())
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
+// Bundle up the JS and copy to the build folder
+gulp.task('bundle-js', function() {
+  let files = ['main', 'restaurant_info'];
+  return merge(files.map(function(file) {
+    return browserify({
+      entries: './src/js/' + file + '.js'
+    })
+    .transform(babelify)
+    .bundle()
     .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
-    .pipe(sourcemaps.write())
+    .pipe(source(file + '.js'))
+    .pipe(buffer())
+    // .pipe(sourcemaps.init())
+    .pipe(uglify())
+    // .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/js'))
     // .pipe(connect.reload())
+  }));
 });
 
 // copy HTML to build folder
@@ -69,8 +78,8 @@ gulp.task('copy-html', function() {
     // .pipe(connect.reload())
 })
 
-// copy SW to build folder
-gulp.task('copy-sw', function() {
+// transpile, minify and copy SW to build folder
+gulp.task('min-sw', function() {
   browserify('src/sw.js')
     .transform(babelify)
     .bundle()
@@ -99,28 +108,28 @@ gulp.task('serve', function() {
   // });
 });
 
-gulp.task('lint', () => {
-  // ESLint ignores files with "node_modules" paths.
-  // So, it's best to have gulp ignore the directory as well.
-  // Also, Be sure to return the stream from the task;
-  // Otherwise, the task may end before the stream has finished.
-  return gulp.src(['**/*.js','!node_modules/**'])
-    // eslint() attaches the lint output to the "eslint" property
-    // of the file object so it can be used by other modules.
-    .pipe(eslint())
-    // eslint.format() outputs the lint results to the console.
-    // Alternatively use eslint.formatEach() (see Docs).
-    .pipe(eslint.format())
-    // To have the process exit with an error code (1) on
-    // lint error, return the stream and pipe to failAfterError last.
-    // .pipe(eslint.failAfterError());
-});
+// gulp.task('lint', () => {
+//   // ESLint ignores files with "node_modules" paths.
+//   // So, it's best to have gulp ignore the directory as well.
+//   // Also, Be sure to return the stream from the task;
+//   // Otherwise, the task may end before the stream has finished.
+//   return gulp.src(['**/*.js','!node_modules/**'])
+//     // eslint() attaches the lint output to the "eslint" property
+//     // of the file object so it can be used by other modules.
+//     .pipe(eslint())
+//     // eslint.format() outputs the lint results to the console.
+//     // Alternatively use eslint.formatEach() (see Docs).
+//     .pipe(eslint.format())
+//     // To have the process exit with an error code (1) on
+//     // lint error, return the stream and pipe to failAfterError last.
+//     // .pipe(eslint.failAfterError());
+// });
 
 gulp.task('watch', function() {
   gulp.watch('src/css/*.css', ['min-css']).on('change', browserSync.reload);
-  gulp.watch('src/js/*.js', ['lint', 'copy-js']).on('change', browserSync.reload);
+  gulp.watch('src/js/*.js', ['bundle-js']).on('change', browserSync.reload);
   gulp.watch('src/*.html', ['copy-html']).on('change', browserSync.reload);
-  gulp.watch('src/sw.js', ['copy-sw']).on('change', browserSync.reload);
+  gulp.watch('src/sw.js', ['min-sw']).on('change', browserSync.reload);
 })
 
-gulp.task('default', ['copy-images', 'images-webp', 'copy-json', 'min-css', 'copy-js', 'copy-html', 'copy-sw', 'watch', 'lint', 'serve']);
+gulp.task('default', ['copy-images', 'images-webp', 'copy-json', 'min-css', 'bundle-js', 'copy-html', 'min-sw', 'watch', 'serve']);
